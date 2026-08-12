@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cadbury — Une conviction devenue marque</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Lora:ital,wght@0,400;0,500;1,400&family=Mrs+Saint+Delafield&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink: #201029;
+    --purple-deep: #2E0F38;
+    --purple: #4B1E5C;
+    --purple-light: #6B3480;
+    --parchment: #F1E6C9;
+    --parchment-2: #E8DAB4;
+    --cream: #F8F1DE;
+    --gold: #C6A15B;
+    --gold-bright: #E4C583;
+    --line: rgba(198,161,91,0.35);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--purple-deep);
+    color:var(--cream);
+    font-family:'Lora', serif;
+    line-height:1.65;
+    overflow-x:hidden;
+  }
+
+  ::selection{ background:var(--gold); color:var(--purple-deep); }
+
+  h1,h2,h3{
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    margin:0;
+    letter-spacing:0.01em;
+  }
+
+  .script{ font-family:'Mrs Saint Delafield', cursive; font-weight:400; }
+
+  /* ---------- ambient cocoa-pod texture ---------- */
+  .bg-motif{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    opacity:0.06;
+    background-image:
+      radial-gradient(circle at 15% 20%, var(--gold) 0, transparent 2px),
+      radial-gradient(circle at 80% 60%, var(--gold) 0, transparent 2px),
+      radial-gradient(circle at 45% 85%, var(--gold) 0, transparent 2px);
+    background-size: 600px 600px;
+  }
+
+  section{
+    position:relative; z-index:1;
+    max-width:920px;
+    margin:0 auto;
+    padding:7rem 1.75rem;
+  }
+
+  /* ---------- reveal-on-scroll (subtle, one direction, no bounce) ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(22px);
+    transition:opacity 0.9s ease, transform 0.9s ease;
+  }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  .reveal.d1{ transition-delay:0.12s; }
+  .reveal.d2{ transition-delay:0.24s; }
+
+  /* ================= HERO ================= */
+  .hero{
+    min-height:100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center;
+    padding-top:4rem; padding-bottom:4rem;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(107,52,128,0.55), transparent 60%),
+      var(--purple-deep);
+  }
+  .hero .eyebrow{
+    text-transform:uppercase; letter-spacing:0.35em; font-size:0.7rem;
+    color:var(--gold-bright); margin-bottom:1.6rem; font-family:'Lora';
+  }
+  .hero .logo-wrap{
+    background: var(--cream);
+    padding:1.4rem 2.4rem;
+    border-radius:6px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.45);
+    margin-bottom:2.2rem;
+  }
+  .hero .logo-wrap img{ display:block; height:56px; width:auto; }
+  .hero h1{
+    font-size:clamp(2.4rem, 6vw, 4.2rem);
+    color:var(--cream);
+    max-width:14ch;
+    line-height:1.05;
+  }
+  .hero .sub{
+    margin-top:1.6rem; font-size:1.15rem; color:var(--parchment-2);
+    max-width:36ch; font-style:italic;
+  }
+  .hero .since{
+    margin-top:3rem;
+    width:96px; height:96px; border-radius:50%;
+    border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    flex-direction:column;
+    font-family:'Fraunces'; color:var(--gold-bright);
+  }
+  .hero .since .yr{ font-size:1.5rem; font-weight:600; }
+  .hero .since .lbl{ font-size:0.6rem; letter-spacing:0.15em; text-transform:uppercase; opacity:0.8;}
+
+  .scroll-cue{
+    margin-top:2.8rem; font-size:0.75rem; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--parchment-2); opacity:0.6;
+  }
+
+  /* ================= EYEBROW / LABEL ================= */
+  .eyebrow-label{
+    display:inline-flex; align-items:center; gap:0.7rem;
+    text-transform:uppercase; letter-spacing:0.28em; font-size:0.7rem;
+    color:var(--gold-bright); margin-bottom:1.4rem;
+  }
+  .eyebrow-label::before{
+    content:''; width:28px; height:1px; background:var(--gold);
+  }
+
+  /* ================= FOUNDER SECTION (paper card) ================= */
+  .founder{
+    display:grid; grid-template-columns: 0.85fr 1.15fr; gap:3rem; align-items:center;
+  }
+  .founder .portrait-frame{
+    background:var(--parchment);
+    padding:1rem 1rem 1.6rem 1rem;
+    box-shadow:0 25px 50px rgba(0,0,0,0.4);
+    transform:rotate(-1.4deg);
+  }
+  .founder .portrait-frame img{
+    width:100%; display:block; filter:sepia(0.25) contrast(1.02);
+    border:1px solid rgba(0,0,0,0.15);
+  }
+  .founder .cap{
+    font-family:'Mrs Saint Delafield'; color:var(--purple-deep);
+    text-align:center; font-size:1.4rem; margin-top:0.6rem;
+  }
+  .founder .years{ color:var(--purple); text-align:center; font-size:0.75rem; letter-spacing:0.1em; }
+  .founder h2{ font-size:2.1rem; color:var(--cream); margin-bottom:1rem; }
+  .founder p{ color:var(--parchment-2); font-size:1.02rem; }
+  .founder .tags{ display:flex; gap:0.6rem; flex-wrap:wrap; margin-top:1.4rem; }
+  .founder .tags span{
+    border:1px solid var(--line); border-radius:999px; padding:0.35rem 0.9rem;
+    font-size:0.72rem; letter-spacing:0.05em; color:var(--gold-bright);
+  }
+
+  /* ================= WHY — pull quote style block ================= */
+  .why{ text-align:left; }
+  .why h2{ font-size:2.1rem; color:var(--cream); margin-bottom:1.6rem; max-width:20ch; }
+  .why .lede{ font-size:1.15rem; color:var(--parchment); max-width:60ch; }
+  .why .pillars{
+    margin-top:2.6rem; display:grid; grid-template-columns:repeat(3,1fr); gap:1.6rem;
+  }
+  .why .pillar{
+    border-left:1px solid var(--line); padding-left:1.1rem;
+  }
+  .why .pillar .num{ font-family:'Fraunces'; color:var(--gold); font-size:0.85rem; letter-spacing:0.1em;}
+  .why .pillar h3{ font-size:1.05rem; color:var(--cream); margin:0.4rem 0 0.5rem; }
+  .why .pillar p{ font-size:0.92rem; color:var(--parchment-2); margin:0; }
+
+  /* ================= LOGO SECTION ================= */
+  .logo-section{
+    background:var(--parchment);
+    border-radius:4px;
+    color:var(--ink);
+    padding:4rem 3rem;
+    display:grid; grid-template-columns:1fr 1fr; gap:3rem; align-items:center;
+    box-shadow:0 30px 70px rgba(0,0,0,0.35);
+  }
+  .logo-section .logo-plate{
+    background:#fff; border:1px solid rgba(0,0,0,0.08);
+    padding:2.4rem; display:flex; align-items:center; justify-content:center;
+  }
+  .logo-section .logo-plate img{ width:100%; max-width:280px; }
+  .logo-section h2{ color:var(--purple-deep); font-size:1.9rem; margin-bottom:1rem; }
+  .logo-section p{ color:#4a3a52; }
+  .logo-section .fact{
+    margin-top:1.4rem; padding-top:1.2rem; border-top:1px solid rgba(0,0,0,0.12);
+    font-size:0.85rem; color:var(--purple);
+  }
+
+  /* ================= LOGO DEEP-DIVE (nouvelle section) ================= */
+  .deepdive h2{ font-size:2.1rem; color:var(--cream); margin-bottom:0.8rem; text-align:center; }
+  .deepdive .lede{
+    text-align:center; color:var(--parchment-2); max-width:56ch; margin:0 auto 3rem;
+    font-size:1.02rem;
+  }
+  .deepdive-grid{
+    display:grid; grid-template-columns:repeat(2,1fr); gap:1.8rem;
+  }
+  .deepdive-card{
+    background:rgba(241,230,201,0.04);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:1.9rem 1.9rem 2.1rem;
+  }
+  .deepdive-card .idx{
+    font-family:'Fraunces'; color:var(--gold); font-size:0.72rem;
+    letter-spacing:0.18em; text-transform:uppercase; margin-bottom:0.7rem;
+  }
+  .deepdive-card h3{ font-size:1.12rem; color:var(--gold-bright); margin-bottom:0.7rem; }
+  .deepdive-card p{ font-size:0.92rem; color:var(--parchment-2); margin:0 0 0.6rem; }
+  .deepdive-card p:last-child{ margin-bottom:0; }
+  .deepdive-card ul{ margin:0.4rem 0 0; padding-left:1.1rem; }
+  .deepdive-card li{ font-size:0.9rem; color:var(--parchment-2); margin-bottom:0.35rem; }
+  .deepdive-swatch{
+    display:inline-flex; align-items:center; gap:0.5rem; margin-top:0.9rem;
+    font-size:0.78rem; color:var(--parchment);
+  }
+  .deepdive-swatch .dot{
+    width:14px; height:14px; border-radius:50%; display:inline-block;
+    border:1px solid rgba(255,255,255,0.25);
+  }
+  .deepdive-note{
+    margin-top:1.8rem; text-align:center; font-size:0.82rem; color:var(--gold-bright);
+    font-style:italic;
+  }
+
+  /* ================= TIMELINE ================= */
+  .timeline{ }
+  .timeline h2{ font-size:2.1rem; color:var(--cream); margin-bottom:2.4rem; text-align:center; }
+  .tl-row{
+    display:grid; grid-template-columns:110px 1fr; gap:1.6rem;
+    padding:1.5rem 0; border-top:1px solid var(--line);
+  }
+  .tl-row:last-child{ border-bottom:1px solid var(--line); }
+  .tl-row .yr{ font-family:'Fraunces'; color:var(--gold-bright); font-size:1.3rem; }
+  .tl-row h3{ font-size:1.05rem; color:var(--cream); margin-bottom:0.35rem; }
+  .tl-row p{ color:var(--parchment-2); font-size:0.92rem; margin:0; }
+
+  /* ================= AUDIENCE ================= */
+  .audience{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:3rem; align-items:center;
+  }
+  .audience h2{ font-size:2.1rem; color:var(--cream); margin-bottom:1.2rem; max-width:18ch; }
+  .audience p{ color:var(--parchment-2); }
+  .audience .stat-card{
+    background:var(--purple); border-radius:6px; padding:2.2rem;
+    box-shadow:0 20px 45px rgba(0,0,0,0.3);
+  }
+  .audience .stat-card .big{ font-family:'Fraunces'; font-size:2.6rem; color:var(--gold-bright); }
+  .audience .stat-card .lbl{ font-size:0.85rem; color:var(--parchment); margin-top:0.3rem; }
+  .audience .stat-card hr{ border:none; border-top:1px solid var(--line); margin:1.4rem 0; }
+
+  .audience .product-shot{
+    margin-top:2rem; border-radius:6px; overflow:hidden;
+    box-shadow:0 20px 45px rgba(0,0,0,0.3);
+  }
+  .audience .product-shot img{ width:100%; display:block; }
+
+  /* ================= CLOSING ================= */
+  .closing{
+    text-align:center; padding-top:6rem; padding-bottom:8rem;
+  }
+  .closing .script{ font-size:2.4rem; color:var(--gold-bright); display:block; margin-bottom:0.6rem; }
+  .closing h2{ font-size:1.7rem; color:var(--cream); max-width:26ch; margin:0 auto 1.4rem; }
+  .closing p{ color:var(--parchment-2); max-width:44ch; margin:0 auto; font-size:0.95rem; }
+  .closing .seal{
+    margin:2.6rem auto 0; width:70px; height:1px; background:var(--gold);
+  }
+
+  footer{
+    text-align:center; padding:2.5rem 1rem 3rem; font-size:0.75rem;
+    color:rgba(241,230,201,0.4); position:relative; z-index:1;
+  }
+
+  @media (max-width: 760px){
+    .founder, .logo-section, .audience, .deepdive-grid{ grid-template-columns:1fr; }
+    .why .pillars{ grid-template-columns:1fr; }
+    section{ padding:4.5rem 1.4rem; }
+    .founder .portrait-frame{ max-width:280px; margin:0 auto; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-motif"></div>
+
+<!-- ===== HERO ===== -->
+<section class="hero">
+  <div class="eyebrow reveal in">Une histoire de conviction</div>
+  <div class="logo-wrap reveal in">
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Cadbury_logo_new.jpg" alt="Logo Cadbury">
+  </div>
+  <h1 class="reveal in d1">Le chocolat né d'une idée, pas d'une recette</h1>
+  <p class="sub reveal in d2">Comment un épicier quaker de Birmingham a bâti l'une des marques de chocolat les plus reconnues au monde</p>
+  <div class="since reveal in d2">
+    <div class="yr">1824</div>
+    <div class="lbl">Birmingham</div>
+  </div>
+  <div class="scroll-cue">faire défiler ↓</div>
+</section>
+
+<!-- ===== LE FONDATEUR ===== -->
+<section class="founder">
+  <div class="reveal">
+    <div class="portrait-frame">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/John_Cadbury.jpg" alt="Portrait de John Cadbury">
+      <div class="cap">John Cadbury</div>
+      <div class="years">1801 — 1889</div>
+    </div>
+  </div>
+  <div class="reveal d1">
+    <div class="eyebrow-label">Le créateur</div>
+    <h2>Un épicier, pas un chocolatier de formation</h2>
+    <p>John Cadbury grandit à Birmingham dans une famille quaker aisée. À cette époque, les quakers n'ont pas facilement accès à l'université ni à l'armée : il devient plutôt apprenti chez un marchand, puis ouvre en 1824 sa propre boutique de thé, de café et de chocolat au 93 Bull Street.</p>
+    <p>C'est dans l'arrière-boutique qu'il commence à préparer lui-même ses boissons chocolatées, avant de louer en 1831 une petite usine pour développer une véritable production.</p>
+    <div class="tags">
+      <span>Quaker</span>
+      <span>Birmingham, 1824</span>
+      <span>Ancien épicier</span>
+    </div>
+  </div>
+</section>
+
+<!-- ===== POURQUOI ===== -->
+<section class="why">
+  <div class="reveal">
+    <div class="eyebrow-label">La raison d'être</div>
+    <h2>Une entreprise pensée comme une réponse morale</h2>
+    <p class="lede">Pour John Cadbury, vendre du chocolat n'est pas qu'un commerce : c'est une manière concrète de vivre ses convictions quaker, à une époque où l'alcool est perçu comme l'un des grands fléaux sociaux de la Grande-Bretagne industrielle.</p>
+  </div>
+  <div class="pillars">
+    <div class="pillar reveal">
+      <div class="num">01</div>
+      <h3>La tempérance</h3>
+      <p>Très engagé dans les mouvements de tempérance, il voit le thé, le café et le chocolat comme des boissons saines, capables de détourner les classes populaires de l'alcool.</p>
+    </div>
+    <div class="pillar reveal d1">
+      <div class="num">02</div>
+      <h3>Une foi mise en pratique</h3>
+      <p>Sa religion quaker valorise le travail utile, la sobriété et le soin porté à autrui : le chocolat devient un prolongement naturel de ces principes.</p>
+    </div>
+    <div class="pillar reveal d2">
+      <div class="num">03</div>
+      <h3>Le bien-être des employés</h3>
+      <p>Cette philosophie se retrouve plus tard dans la politique sociale de l'entreprise : école, assurance maladie, crèche — bien avant que cela ne soit courant.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== LOGO ===== -->
+<section>
+  <div class="logo-section reveal">
+    <div class="logo-plate">
+      <img src="https://en.wikipedia.org/wiki/Special:FilePath/Cadbury%20(2020).svg" alt="Logo actuel Cadbury">
+    </div>
+    <div>
+      <div class="eyebrow-label" style="color:var(--purple);">L'identité visuelle</div>
+      <h2>Une signature devenue logo</h2>
+      <p>Le premier logo Cadbury est commandé en 1905. En 1921, l'entreprise adopte le logo manuscrit qui deviendra emblématique : il s'inspire directement de la signature de William Cadbury, petit-fils du fondateur.</p>
+      <div class="fact">Le pourpre caractéristique de la marque, lui, est adopté en 1914 pour le chocolat Dairy Milk — en hommage à la reine Victoria.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== APPROFONDISSEMENT LOGO (nouvelle section) ===== -->
+<section class="deepdive">
+  <div class="eyebrow-label reveal" style="justify-content:center; display:flex;">Le logo, en détail</div>
+  <h2 class="reveal">De l'inspiration au système visuel complet</h2>
+  <p class="lede reveal d1">Derrière le tracé doré qui orne chaque tablette, un siècle d'ajustements typographiques et une règle simple : ne jamais trahir la signature d'origine.</p>
+
+  <div class="deepdive-grid">
+
+    <div class="deepdive-card reveal">
+      <div class="idx">01 — L'inspiration</div>
+      <h3>Une écriture de famille, pas une création d'agence</h3>
+      <p>Le tracé manuscrit qui sert de logo depuis 1921 s'inspire de la signature réelle de William Cadbury, petit-fils du fondateur, apparue pour la première fois sur les camions de livraison de la marque dans les années 1920.</p>
+      <p>Lors de la refonte de 2020 (agence Bulletproof), les designers sont retournés aux archives de Bournville et se sont aussi inspirés de l'écriture du fondateur John Cadbury lui-même pour redonner au tracé un esprit plus artisanal et contemporain.</p>
+    </div>
+
+    <div class="deepdive-card reveal d1">
+      <div class="idx">02 — La construction</div>
+      <h3>Un tracé façonné sur près d'un siècle</h3>
+      <ul>
+        <li><strong>1905</strong> — premier vrai logo, dessiné par Georges Auriol (artiste Art nouveau) : un cacaoyer stylisé dont le « y » final forme une branche.</li>
+        <li><strong>1921</strong> — apparition du logo manuscrit inspiré de William Cadbury, encore chargé en fioritures.</li>
+        <li><strong>Décennies suivantes</strong> — simplification progressive : courbes excessives supprimées, lettres redressées pour gagner en lisibilité.</li>
+        <li><strong>1952</strong> — généralisation du logo script à l'ensemble des grandes marques du groupe.</li>
+        <li><strong>2020</strong> — nouveau redessin, trait plus fin et plus cursif, toujours ancré dans la signature d'origine.</li>
+      </ul>
+    </div>
+
+    <div class="deepdive-card reveal">
+      <div class="idx">03 — Composition sur les visuels</div>
+      <h3>Le lettrage mène toujours la composition</h3>
+      <p>Sur packaging, affiches ou réseaux sociaux, la typographie n'entre jamais en concurrence avec d'autres éléments graphiques : elle reste le point focal, entourée d'espace pour préserver la lisibilité de ses courbes.</p>
+      <p>Sur les emballages récents, un motif « Dairy Milk » inspiré du paquet original de 1905 vient apporter de la profondeur derrière le lettrage sans jamais l'écraser.</p>
+    </div>
+
+    <div class="deepdive-card reveal d1">
+      <div class="idx">04 — Positionnement sur les affiches</div>
+      <h3>Un ancrage central, jamais un détail</h3>
+      <p>Le nom Cadbury est presque toujours positionné en position dominante — centré ou en haut de la composition — avec une marge généreuse autour du tracé pour que les boucles du script restent nettes, même en petite taille.</p>
+      <p>Cette constance permet au logo de fonctionner aussi bien sur un panneau publicitaire géant que sur l'emballage embossé d'une tablette.</p>
+    </div>
+
+    <div class="deepdive-card reveal">
+      <div class="idx">05 — Le fond habituel</div>
+      <h3>Le pourpre profond comme signature de couleur</h3>
+      <p>Le fond le plus associé à la marque reste le pourpre profond (Pantone 2658C), adopté vers 1914 pour Dairy Milk en hommage à la reine Victoria, combiné à des rehauts or qui font ressortir le tracé.</p>
+      <p>Sur les vingt dernières années, la marque a aussi expérimenté d'autres fonds — version or sur blanc, ou pourpre « liquide » en dégradé — mais toujours en gardant le script identique comme ancre visuelle.</p>
+      <div class="deepdive-swatch"><span class="dot" style="background:#4B1E5C;"></span> Pourpre Cadbury (fond historique)</div>
+      <div class="deepdive-swatch"><span class="dot" style="background:#C6A15B;"></span> Or (rehauts, tracé 2020)</div>
+    </div>
+
+    <div class="deepdive-card reveal d1">
+      <div class="idx">06 — La typographie</div>
+      <h3>Un script sur mesure, sans équivalent commercial</h3>
+      <p>Le lettrage Cadbury n'est pas une police standard : c'est un tracé calligraphique unique, dessiné à la main à partir d'une signature réelle, ce qui explique son caractère chaleureux et artisanal plutôt que corporate.</p>
+      <p>Il n'existe aucun équivalent commercial exact ; la police la plus proche visuellement pour des maquettes rapides est <strong>Bickley Script Std</strong> (fortement retravaillée), ou à défaut une script fluide comme Brush Script pour évoquer l'esprit général.</p>
+    </div>
+
+  </div>
+
+  <div class="deepdive-note reveal d2">À retenir pour la présentation : inspiration familiale → script manuscrit unique → composition centrée sur fond pourpre et or → constance du tracé malgré les évolutions de fond.</div>
+</section>
+
+<!-- ===== TIMELINE ===== -->
+<section class="timeline">
+  <h2 class="reveal">De la boutique à la dynastie</h2>
+  <div class="tl-row reveal"><div class="yr">1824</div><div><h3>Une boutique à Birmingham</h3><p>John Cadbury ouvre son commerce de thé, café et chocolat au 93 Bull Street.</p></div></div>
+  <div class="tl-row reveal d1"><div class="yr">1854</div><div><h3>Fournisseur de la Couronne</h3><p>Cadbury devient fournisseur officiel de cacao et chocolat de la reine Victoria.</p></div></div>
+  <div class="tl-row reveal d2"><div class="yr">1861</div><div><h3>La relève</h3><p>Ses fils George et Richard reprennent l'entreprise familiale.</p></div></div>
+  <div class="tl-row reveal"><div class="yr">1905</div><div><h3>Naissance de Dairy Milk</h3><p>Lancement du premier chocolat au lait Cadbury, avec une recette plus riche en lait.</p></div></div>
+  <div class="tl-row reveal d1"><div class="yr">1921</div><div><h3>Le logo signature</h3><p>Adoption du logo manuscrit inspiré de la signature de William Cadbury.</p></div></div>
+</section>
+
+<!-- ===== PUBLIC CIBLE ===== -->
+<section class="audience">
+  <div class="reveal">
+    <div class="eyebrow-label">Le public visé</div>
+    <h2>Un chocolat pensé pour le plus grand nombre</h2>
+    <p>Dès l'origine, Cadbury ne vise pas une clientèle de luxe restreinte : la marque cherche à rendre le chocolat accessible aux familles ouvrières et bourgeoises, comme alternative saine aux boissons alcoolisées.</p>
+    <p>Aujourd'hui encore, ce positionnement perdure : Dairy Milk s'adresse à toutes les générations, des enfants aux adultes, autour d'une promesse simple — un plaisir quotidien, abordable, partagé en famille ou entre amis.</p>
+  </div>
+  <div class="reveal d1">
+    <div class="stat-card">
+      <div class="big">Toutes générations</div>
+      <div class="lbl">Enfants, familles, adultes — un chocolat du quotidien</div>
+      <hr>
+      <div class="big" style="font-size:2rem;">Marché grand public</div>
+      <div class="lbl">Prix accessible, distribution de masse, présence mondiale</div>
+    </div>
+    <div class="product-shot">
+      <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Cadbury-Dairy-Milk-Caramel-Bar.jpg" alt="Tablette Cadbury Dairy Milk">
+    </div>
+  </div>
+</section>
+
+<!-- ===== CLOSING ===== -->
+<section class="closing">
+  <span class="script reveal">Depuis 1824</span>
+  <h2 class="reveal d1">D'une petite boutique de Birmingham à une marque mondiale, l'esprit reste le même</h2>
+  <p class="reveal d2">Rendre un plaisir simple accessible à tous — c'est l'idée qui a guidé John Cadbury, et qui guide encore la marque aujourd'hui.</p>
+  <div class="seal reveal d2"></div>
+</section>
+
+<footer>Sources : Wikipédia (John Cadbury, Cadbury, William Adlington Cadbury) · 1000logos.net · logos-world.net · fabrikbrands.com · kreafolk.com · enthof.com · Images : Wikimedia Commons / Wikipédia</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.15 });
+  els.forEach(el=> io.observe(el));
+</script>
+
+</body>
+</html>
